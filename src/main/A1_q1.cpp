@@ -18,8 +18,29 @@ namespace aim::q1 {
 
 
 // BEGIN IMPLEMENTATION
-long long ratio(long long hp, long long max_hp) { throw std::runtime_error("TODO"); }
-std::string report(int id, long long hp, long long max_hp, int battery) { throw std::runtime_error("TODO"); }
+long long ratio(long long hp, long long max_hp) {
+    if (max_hp <= 0) {
+        return -1;
+    }
+
+    hp = std::max(0LL, std::min(hp, max_hp));
+    return hp * 100 / max_hp;
+}
+
+std::string report(int id, long long hp, long long max_hp, int battery) {
+    const int normalized_battery = std::max(0, std::min(battery, 100));
+    const std::string state = normalized_battery >= 60
+        ? "OK"
+        : normalized_battery >= 20 ? "WARNING" : "LOW";
+    const std::string hp_field = max_hp <= 0
+        ? "INVALID"
+        : std::to_string(ratio(hp, max_hp));
+
+    return "ID=" + std::to_string(id)
+        + ";HP=" + hp_field
+        + ";BAT=" + std::to_string(normalized_battery)
+        + ";STATE=" + state;
+}
 // END IMPLEMENTATION
 }
 
