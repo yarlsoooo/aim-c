@@ -32,9 +32,10 @@ std::string report(int id, long long hp, long long max_hp, int battery) {
     const std::string state = normalized_battery >= 60
         ? "OK"
         : normalized_battery >= 20 ? "WARNING" : "LOW";
-    const std::string hp_field = max_hp <= 0
+    const long long hp_percent = ratio(hp, max_hp);
+    const std::string hp_field = hp_percent < 0
         ? "INVALID"
-        : std::to_string(ratio(hp, max_hp));
+        : std::to_string(hp_percent);
 
     return "ID=" + std::to_string(id)
         + ";HP=" + hp_field
