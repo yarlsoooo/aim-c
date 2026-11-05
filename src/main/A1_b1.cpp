@@ -18,7 +18,34 @@ namespace aim::b1 {
 
 
 // BEGIN IMPLEMENTATION
-bool parse_i32(const std::string& text, int& output) { throw std::runtime_error("TODO"); }
+bool parse_i32(const std::string& text, int& output) {
+    std::size_t index = 0;
+    bool negative = false;
+    if (index < text.size() && (text[index] == '+' || text[index] == '-')) {
+        negative = text[index] == '-';
+        ++index;
+    }
+    if (index == text.size()) {
+        return false;
+    }
+
+    const long long limit = negative ? 2147483648LL : 2147483647LL;
+    long long value = 0;
+    for (; index < text.size(); ++index) {
+        const char character = text[index];
+        if (character < '0' || character > '9') {
+            return false;
+        }
+        const int digit = character - '0';
+        if (value > (limit - digit) / 10) {
+            return false;
+        }
+        value = value * 10 + digit;
+    }
+
+    output = static_cast<int>(negative ? -value : value);
+    return true;
+}
 // END IMPLEMENTATION
 }
 
