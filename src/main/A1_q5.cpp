@@ -78,6 +78,10 @@ std::vector<std::vector<int>> risk(const std::vector<std::string>& grid) {
 using namespace aim::q5;
 int main() {
     try {
+        {
+    CHECK((risk({"."}) ==
+        std::vector<std::vector<int>>{{0}}));
+    }
         CHECK((
     risk({"...", "...", "..."}) ==
     std::vector<std::vector<int>>{
