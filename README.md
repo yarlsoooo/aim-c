@@ -160,7 +160,33 @@ Q6: 完成，时间复杂度O(n!),空间复杂度O(n)。
 边界测试：{7, 3, 4, 1, true},{2, 0, 0, 2, true},`==` 7,{7, 3, 4, 20, true}, {2, 0, 2, 20, true}`==` 2 ；{7, 3, 4, 20, true},{2, 0, 5, 20, true}`==` 2； {1, 0, 0, 1, false},{2, 1, 1, 5, true}`==`2; {1, 0, 0, 0, true},{2, 1, 1, -5, true} `==` -1。
 缺陷定位：
 Q7: 完成，时间复杂度O(n log n)，空间复杂度O(1)。
-边界测试：[1,2,3,4],`==`10；[5,5,5],`==`15；[1],`==`1。
+边界测试：
+```c
+{
+    FireResult r = simulate(5, 80, 20, 10, {});
+    CHECK(r.shots == 0 && r.rejected == 0 &&
+          r.ammo == 5 && r.heat == 80);
+}
+ 
+{
+FireResult r = simulate(1, 100, 20, 20, {1});
+CHECK(r.shots == 1 && r.rejected == 0 &&
+r.ammo == 0 && r.heat == 100)
+}；
+
+{
+    FireResult r = simulate(0, 50, 10, 20, {1});
+    CHECK(r.shots == 0 && r.rejected == 1 &&
+          r.ammo == 0 && r.heat == 40);
+}
+
+{
+    FireResult r = simulate(2, 90, 0, 20, {1});
+    CHECK(r.shots == 0 && r.rejected == 1 &&
+          r.ammo == 2 && r.heat == 90);
+}
+```
+
 缺陷定位：
 Q8: 完成，时间复杂度O(n^2)，空间复杂度O(n)。
 边界测试：[[1,2],[3,4]],`==`10；[[5,5],[5,5]],`==`20；[[1]],`==`1。
