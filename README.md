@@ -189,7 +189,31 @@ r.ammo == 0 && r.heat == 100)
 
 缺陷定位：
 Q8: 完成，时间复杂度O(n^2)，空间复杂度O(n)。
-边界测试：[[1,2],[3,4]],`==`10；[[5,5],[5,5]],`==`20；[[1]],`==`1。
+边界测试：
+```c
+{ Summary r = summarize({});
+    CHECK(r.valid == 0);
+    CHECK(r.duplicate == 0);
+    CHECK(r.invalid == 0);
+    CHECK(r.total_hp == 0);
+    CHECK(r.ids.empty());}
+{
+    Summary r = summarize({{3, 50}, {1, 80}, {2, 30}});
+    CHECK(r.valid == 3);
+    CHECK(r.duplicate == 0);
+    CHECK(r.invalid == 0);
+    CHECK(r.total_hp == 160);
+    CHECK((r.ids == std::vector<int>{1, 2, 3}));
+}
+{
+    Summary r = summarize({{9999, 100}});
+    CHECK(r.valid == 1);
+    CHECK(r.duplicate == 0);
+    CHECK(r.invalid == 0);
+    CHECK(r.total_hp == 100);
+    CHECK((r.ids == std::vector<int>{9999}));
+}
+``` 
 缺陷定位：
 
 ## AI 使用与开发过程（你来写）
