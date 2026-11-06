@@ -198,7 +198,7 @@ Q8: 完成，时间复杂度O(n^2)，空间复杂度O(n)。
     CHECK(r.total_hp == 0);
     CHECK(r.ids.empty());}
 {
-    Summary r = summarize({{3, 50}, {1, 80}, {2, 30}});
+ Summary r = summarize({{3, 50}, {1, 80}, {2, 30}});
     CHECK(r.valid == 3);
     CHECK(r.duplicate == 0);
     CHECK(r.invalid == 0);
@@ -206,7 +206,7 @@ Q8: 完成，时间复杂度O(n^2)，空间复杂度O(n)。
     CHECK((r.ids == std::vector<int>{1, 2, 3}));
 }
 {
-    Summary r = summarize({{9999, 100}});
+Summary r = summarize({{9999, 100}});
     CHECK(r.valid == 1);
     CHECK(r.duplicate == 0);
     CHECK(r.invalid == 0);
@@ -215,6 +215,37 @@ Q8: 完成，时间复杂度O(n^2)，空间复杂度O(n)。
 }
 ``` 
 缺陷定位：
+b1: 完成，时间复杂度O(n)，空间复杂度O(n)。
+边界测试：
+x=0
+("-2147483648", x)`==` -2147483648；
+("0", x)`==` `0`；
+int x=9
+0000123 `==`123 零开头；
+-0000 `==` 0负号；
+"12 ""1 1" `==` 9空格。
+
+b2: 完成，时间复杂度O(n)，空间复杂度O(n)。
+边界测试：
+```c
+{
+    int a[] = {1, 2, 3};
+    std::size_t n = compact(a, 3, 5, 10);
+    CHECK(n == 0);
+}没有数符合
+
+{
+    int a[] = {2, 2, 1, 2, 3};
+    std::size_t n = compact(a, 5, 1, 2);
+    CHECK(n == 4);
+    CHECK(a[0] == 2 && a[1] == 2 &&
+          a[2] == 1 && a[3] == 2);
+}元素重复
+{
+    CHECK(compact(nullptr, 0, 0, 1) == 0);
+}数组指针均为1空
+
+```
 
 ## AI 使用与开发过程（你来写）
 
